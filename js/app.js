@@ -13,7 +13,7 @@ function player(playerName, playerMove, playerTurn) {
     }
     else if(moveX === false) {
       const moveContainer = `<div class="fill-cell">
-        <img class="fill-cell-img" src="./assets/close.png" alt="cross">
+        <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
       </div>`;
       return {moveInArr: playerMove, moveOnBoard: moveContainer};
     }
@@ -72,12 +72,24 @@ let gameBoardTicTacToe = (function() {
     
     let rowCell = parseInt(event.target.getAttribute('data-row'));
     let colCell = parseInt(event.target.getAttribute('data-col'));
-    
+
+    let currentPlayer = getCurrentPlayer();
+
     if(gameBoard.board[rowCell][colCell] === '') {
-      gameBoard.board[rowCell][colCell] = player1.moveOnBoard();
-            
+      gameBoard.board[rowCell][colCell] = currentPlayer.moveOnBoard();
+      
+      changePlayer();
       _renderGameBoard(); 
     }
+  }
+
+  function changePlayer() {
+    player2.turn = !(player2.turn);
+    player1.turn = !(player1.turn);
+  }
+
+  function getCurrentPlayer() {
+    return player1.turn === true ? player1 : player2;
   }
 
 })()

@@ -2,12 +2,27 @@
 // factory function - player
 function player(playerName, playerMove, playerTurn) {
   const name = playerName;
-  const move = playerMove;
-  const turn = playerTurn;
 
+  function moveOnBoard() {
+    const moveX = playerMove.toUpperCase() === 'X' ? true : false;
+    if(moveX === true) {
+      const moveContainer = `<div class="fill-cell">
+        <img class="fill-cell-img" src="./assets/close.png" alt="cross">
+      </div>`;
+      return {moveInArr: playerMove, moveOnBoard: moveContainer};
+    }
+    else if(moveX === false) {
+      const moveContainer = `<div class="fill-cell">
+        <img class="fill-cell-img" src="./assets/close.png" alt="cross">
+      </div>`;
+      return {moveInArr: playerMove, moveOnBoard: moveContainer};
+    }
+  }
+
+  const turn = playerTurn;
   return{
     name: name,
-    move: move,
+    moveOnBoard: moveOnBoard,
     turn: turn
   }
 }
@@ -59,12 +74,7 @@ let gameBoardTicTacToe = (function() {
     let colCell = parseInt(event.target.getAttribute('data-col'));
     
     if(gameBoard.board[rowCell][colCell] === '') {
-      gameBoard.board[rowCell][colCell] = {
-        moveInArr: 'O', 
-        moveOnBoard: `<div class="fill-cell">
-          <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
-        </div>`
-      }
+      gameBoard.board[rowCell][colCell] = player1.moveOnBoard();
             
       _renderGameBoard(); 
     }

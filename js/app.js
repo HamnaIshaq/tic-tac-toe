@@ -78,6 +78,7 @@ let gameBoardTicTacToe = (function() {
     if(gameBoard.board[rowCell][colCell] === '') {
       gameBoard.board[rowCell][colCell] = currentPlayer.moveOnBoard();
       
+      gameResult();
       changePlayer();
       _renderGameBoard(); 
     }
@@ -90,6 +91,60 @@ let gameBoardTicTacToe = (function() {
 
   function getCurrentPlayer() {
     return player1.turn === true ? player1 : player2;
+  }
+
+  function gameResult() {
+    const currentPlayer = getCurrentPlayer();
+    
+    const result = checkColumn(currentPlayer) || checkRow(currentPlayer) || checkDiagonal1(currentPlayer) || checkDiagonal2(currentPlayer);
+ 
+    if(result === true) {
+      console.log('winner is ', currentPlayer.name)
+    }
+
+  }
+
+  function checkColumn(currentPlayer) {
+    // 3-in-a-column
+    for(let col = 0; col < gameBoard.board.length; col++) {
+      if(gameBoard.board[0][col].moveInArr === currentPlayer.moveOnBoard().moveInArr 
+        && gameBoard.board[1][col].moveInArr === currentPlayer.moveOnBoard().moveInArr
+        && gameBoard.board[2][col].moveInArr === currentPlayer.moveOnBoard().moveInArr) {
+        return true;
+      }
+    }
+  }
+
+  function checkRow(currentPlayer) {
+    // 3-in-a-row
+    for(let row = 0; row < gameBoard.board.length; row++) {
+      if(gameBoard.board[row][0].moveInArr === currentPlayer.moveOnBoard().moveInArr 
+        && gameBoard.board[row][1].moveInArr === currentPlayer.moveOnBoard().moveInArr
+        && gameBoard.board[row][2].moveInArr === currentPlayer.moveOnBoard().moveInArr) {
+        return true;
+      }
+    }
+  }
+
+  function checkDiagonal1(currentPlayer) {
+    // 3-in-a-diagonal
+    let cell = 0;
+    if(gameBoard.board[cell][cell].moveInArr === currentPlayer.moveOnBoard().moveInArr 
+      && gameBoard.board[++cell][cell].moveInArr === currentPlayer.moveOnBoard().moveInArr
+      && gameBoard.board[++cell][cell].moveInArr === currentPlayer.moveOnBoard().moveInArr) {
+      return true;
+    }
+    
+  }
+
+  function checkDiagonal2(currentPlayer) {
+    // 3-in-a-diagonal
+    let cell = 0;
+    if(gameBoard.board[cell][cell+2].moveInArr === currentPlayer.moveOnBoard().moveInArr 
+      && gameBoard.board[cell+1][cell+1].moveInArr === currentPlayer.moveOnBoard().moveInArr
+      && gameBoard.board[cell+2][cell].moveInArr === currentPlayer.moveOnBoard().moveInArr) {
+      return true;
+    }
   }
 
 })()

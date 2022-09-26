@@ -1,4 +1,21 @@
 
+// factory function - player
+function player(playerName, playerMove, playerTurn) {
+  const name = playerName;
+  const move = playerMove;
+  const turn = playerTurn;
+
+  return{
+    name: name,
+    move: move,
+    turn: turn
+  }
+}
+
+const player1 = player('player 1', 'X', true);
+const player2 = player('player 2', 'O', false);
+
+
 // tic tac toe module
 let gameBoardTicTacToe = (function() {
 

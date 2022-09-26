@@ -1,78 +1,24 @@
 
 // tic tac toe module
 let gameBoardTicTacToe = (function() {
-  
+
   let gameBoard = { 
     board: 
     [
-      [
-        {
-          moveInArr: 'X', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
-          </div>` 
-        },
-        {
-          moveInArr: 'O', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/close.png" alt="cross">
-          </div>`
-        },
-        {
-          moveInArr: 'O', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/close.png" alt="cross">
-          </div>` 
-        }
-      ],
-      [
-        {
-          moveInArr: 'X', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
-          </div>`  
-        },
-        {
-          moveInArr: 'O', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/close.png" alt="cross">
-          </div>`  
-        },
-        {
-          moveInArr: 'X', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
-          </div>` 
-        }
-      ],
-      [
-        {
-          moveInArr: 'O', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/close.png" alt="cross">
-          </div>`   
-        },
-        {
-          moveInArr: 'X', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
-          </div>` 
-        },
-        {
-          moveInArr: 'X', 
-          moveOnBoard: `<div class="fill-cell">
-            <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
-          </div>` 
-        }
-      ],
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
     ] 
   };
 
   // cacheDOM
   let board = document.querySelector('#board');
   let boardCells = board.querySelectorAll('.game-board-border')
-
-  _renderGameBoard();
+  
+  // bindEvents
+  boardCells.forEach(cell => {
+    cell.addEventListener('click', addMoveToGameBoard)
+  })
 
   function _renderGameBoard() {
 
@@ -80,12 +26,31 @@ let gameBoardTicTacToe = (function() {
     
     for(let cellRows = 0; cellRows < gameBoard.board.length; cellRows++) {
       for(let cellCols = 0; cellCols < gameBoard.board[cellRows].length; cellCols++) {
-        boardCells[count].innerHTML = gameBoard.board[cellRows][cellCols].moveOnBoard;
+        if(gameBoard.board[cellRows][cellCols] !== '') {
+          boardCells[count].innerHTML = gameBoard.board[cellRows][cellCols].moveOnBoard;
+        }
         
         count++;
       } 
     }
 
+  }
+
+  function addMoveToGameBoard(event) {
+    
+    let rowCell = parseInt(event.target.getAttribute('data-row'));
+    let colCell = parseInt(event.target.getAttribute('data-col'));
+    
+    if(gameBoard.board[rowCell][colCell] === '') {
+      gameBoard.board[rowCell][colCell] = {
+        moveInArr: 'O', 
+        moveOnBoard: `<div class="fill-cell">
+          <img class="fill-cell-img" src="./assets/circle-blue.png" alt="circle">
+        </div>`
+      }
+            
+      _renderGameBoard(); 
+    }
   }
 
 })()

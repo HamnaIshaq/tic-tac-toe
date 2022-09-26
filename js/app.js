@@ -42,6 +42,7 @@ let gameBoardTicTacToe = (function() {
       ['', '', ''],
     ] 
   };
+  let filledGameBoard = 0;
 
   // cacheDOM
   let board = document.querySelector('#board');
@@ -94,6 +95,11 @@ let gameBoardTicTacToe = (function() {
   }
 
   function gameResult() {
+    winGame();
+    checkTie();
+  }
+
+  function winGame() {
     const currentPlayer = getCurrentPlayer();
     
     const result = checkColumn(currentPlayer) || checkRow(currentPlayer) || checkDiagonal1(currentPlayer) || checkDiagonal2(currentPlayer);
@@ -101,7 +107,6 @@ let gameBoardTicTacToe = (function() {
     if(result === true) {
       console.log('winner is ', currentPlayer.name)
     }
-
   }
 
   function checkColumn(currentPlayer) {
@@ -144,6 +149,13 @@ let gameBoardTicTacToe = (function() {
       && gameBoard.board[cell+1][cell+1].moveInArr === currentPlayer.moveOnBoard().moveInArr
       && gameBoard.board[cell+2][cell].moveInArr === currentPlayer.moveOnBoard().moveInArr) {
       return true;
+    }
+  }
+
+  function checkTie() {
+    filledGameBoard++;
+    if(filledGameBoard === gameBoard.board.length*gameBoard.board.length) {
+      console.log('Tie')
     }
   }
 

@@ -49,14 +49,20 @@ let gameBoardTicTacToe = (function() {
   let board = document.querySelector('#board');
   let boardCells = board.querySelectorAll('.game-board-border')
 
-  let player1Score = document.querySelector('#player1-score');
-  let player2Score = document.querySelector('#player2-score');
-  let tieScore = document.querySelector('#tie-score');
+  let player1Score = board.querySelector('#player1-score');
+  let player2Score = board.querySelector('#player2-score');
+  let tieScore = board.querySelector('#tie-score');
+
+  let matchResultContainer = board.querySelector('.match-result-container');
+  let matchResult = matchResultContainer.querySelector('#match-result');
+  let playAgainBtn = matchResultContainer.querySelector('#btn-play-again');
   
   // bindEvents
   boardCells.forEach(cell => {
     cell.addEventListener('click', addMoveToGameBoard)
   })
+  playAgainBtn.addEventListener('click', playAgain)
+
 
   function _renderGameBoard() {
 
@@ -67,7 +73,9 @@ let gameBoardTicTacToe = (function() {
         if(gameBoard.board[cellRows][cellCols] !== '') {
           boardCells[count].innerHTML = gameBoard.board[cellRows][cellCols].moveOnBoard;
         }
-        
+        else {
+          boardCells[count].innerHTML = gameBoard.board[cellRows][cellCols];
+        }
         count++;
       } 
     }
@@ -180,9 +188,50 @@ let gameBoardTicTacToe = (function() {
       else if(currentPlayer.name === 'player 2') {
         player2Score.textContent = parseInt(player2Score.textContent) + 1;
       }
+      showGameResult();
     }
     else if(gameWon === false) {
       tieScore.textContent = parseInt(tieScore.textContent) + 1;
+      showGameResult();
+    }
+    
+  }
+
+  // show match result
+  function showGameResult() {
+    let currentPlayer = getCurrentPlayer();
+
+    toggleMatchResultContainer()
+
+    if(gameWon === true) {
+      let winner = currentPlayer.name;
+
+      matchResult.textContent = (winner + ' wins').toUpperCase();
+    }
+    else if(gameWon === false) {
+      matchResult.textContent = ('tie').toUpperCase();
+    }
+    
+  }
+
+  // play again
+  function playAgain() {
+    toggleMatchResultContainer()
+
+    resetBoard();
+
+    _renderGameBoard();
+  }
+
+  function toggleMatchResultContainer() {
+    matchResultContainer.classList.toggle('hide');
+  }
+
+  function resetBoard() {
+    for(let row = 0; row < gameBoard.board.length; row++) {
+      for(let col = 0; col < gameBoard.board[row].length; col++) {
+        gameBoard.board[row][col] = '';
+      }
     }
   }
 

@@ -119,7 +119,6 @@ let gameBoardTicTacToe = (function() {
     const result = checkColumn(currentPlayer) || checkRow(currentPlayer) || checkDiagonal1(currentPlayer) || checkDiagonal2(currentPlayer);
  
     if(result === true) {
-      console.log('winner is ', currentPlayer.name)
       gameWon = true;
       gameScore();
     }
@@ -172,7 +171,6 @@ let gameBoardTicTacToe = (function() {
     filledGameBoard++;
     if(filledGameBoard === gameBoard.board.length*gameBoard.board.length) {
       if(gameWon === false) {
-        console.log('Tie');
         gameScore();
       }
     }

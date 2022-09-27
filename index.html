@@ -13,11 +13,11 @@
 </head>
 <body>
   
-  <div class="container">
-    <h1 class="game-title">tic-tac-toe</h1>
+  <div>
+    <h1 class="game-title container">tic-tac-toe</h1>
     
-    <div id="board">
-      <div class="flex flex-center-xy">
+    <div id="board" class="container">
+      <div class="flex flex-center-xy mt-5">
         <div>
           <div class="flex">
             <div class="flex game-board-border" data-row="0" data-col="0"></div>
@@ -37,13 +37,22 @@
         </div>
       </div>
     
-      <div class="score-board">
+      <div class="score-board container">
         <p >Player 1: <span id="player1-score">0</span></p>
         <p>Tie: <span id="tie-score">0</span></p>
         <p>Player 2: <span id="player2-score">0</span></p>
     
       </div>
     
+      <div class="match-result-container hide">
+        <div class="match-result-wrapper container flex flex-center-xy">
+          <div class="wrapper">
+            <h2 id="match-result"></h2>
+            <button type="button" id="btn-play-again" class="btn btn-play-again">Play Again</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 

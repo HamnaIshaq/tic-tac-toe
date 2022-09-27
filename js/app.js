@@ -43,10 +43,15 @@ let gameBoardTicTacToe = (function() {
     ] 
   };
   let filledGameBoard = 0;
+  let gameWon = false;
 
   // cacheDOM
   let board = document.querySelector('#board');
   let boardCells = board.querySelectorAll('.game-board-border')
+
+  let player1Score = document.querySelector('#player1-score');
+  let player2Score = document.querySelector('#player2-score');
+  let tieScore = document.querySelector('#tie-score');
   
   // bindEvents
   boardCells.forEach(cell => {
@@ -99,6 +104,7 @@ let gameBoardTicTacToe = (function() {
     checkTie();
   }
 
+  // game result
   function winGame() {
     const currentPlayer = getCurrentPlayer();
     
@@ -106,6 +112,8 @@ let gameBoardTicTacToe = (function() {
  
     if(result === true) {
       console.log('winner is ', currentPlayer.name)
+      gameWon = true;
+      gameScore();
     }
   }
 
@@ -155,7 +163,26 @@ let gameBoardTicTacToe = (function() {
   function checkTie() {
     filledGameBoard++;
     if(filledGameBoard === gameBoard.board.length*gameBoard.board.length) {
-      console.log('Tie')
+      if(gameWon === false) {
+        console.log('Tie');
+        gameScore();
+      }
+    }
+  }
+
+  // game score
+  function gameScore() {
+    let currentPlayer = getCurrentPlayer();
+    if(gameWon === true) {
+      if(currentPlayer.name === 'player 1') {
+        player1Score.textContent = parseInt(player1Score.textContent) + 1;
+      }
+      else if(currentPlayer.name === 'player 2') {
+        player2Score.textContent = parseInt(player2Score.textContent) + 1;
+      }
+    }
+    else if(gameWon === false) {
+      tieScore.textContent = parseInt(tieScore.textContent) + 1;
     }
   }
 

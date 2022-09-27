@@ -84,9 +84,9 @@ let gameBoardTicTacToe = (function() {
 
   function addMoveToGameBoard(event) {
     
-    let rowCell = parseInt(event.target.getAttribute('data-row'));
-    let colCell = parseInt(event.target.getAttribute('data-col'));
-
+    let rowCell = parseInt(event.currentTarget.getAttribute('data-row'));
+    let colCell = parseInt(event.currentTarget.getAttribute('data-col'));
+    
     let currentPlayer = getCurrentPlayer();
 
     if(gameBoard.board[rowCell][colCell] === '') {
